@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "423118980863",
+    "firebase_url": "https://drecksxcode.firebaseio.com",
+    "project_id": "drecksxcode",
+    "storage_bucket": "drecksxcode.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:423118980863:android:4b8253729f6206dc382eca",
+        "android_client_info": {
+          "package_name": "com.example.drecks_xcode"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "423118980863-9q42mm5smlpfflpo788u7hsbr9rfth7s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARznbbwUxxUFqBPDBCmHZHqdc9d2vNArc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "423118980863-hcd1ao99fidvsua43f89r3t6667h0vj9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "423118980863-931sp4d7l20ahip1vturufq1uggfhgr5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jmanke.DrecksXcode"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
