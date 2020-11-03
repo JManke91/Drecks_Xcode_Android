@@ -27,8 +27,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Date;
 
 public class MainFragment extends Fragment {
-
-    private MainViewModel mViewModel;
     private Button sendRequestButton;
     private TextView resultTextView;
     private DatabaseReference mDatabase;
@@ -53,18 +51,15 @@ public class MainFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
 
         sendRequestButton = getActivity().findViewById(R.id.sendRequestButton);
         resultTextView = getActivity().findViewById(R.id.resultTextView);
 
-        // TODO: Remove after testing
-        //FirebaseClient.getStatusUpdates();
         FirebaseClient.getStatusUpdates(new FirebaseResponseInterface() {
             @Override
             public void onCallback(int value) {
-                // do something with value -> bind to UI
                 Log.d("callbackTag", "onCallback: ");
+                resultTextView.setText(Integer.toString(value));
             }
         });
 
@@ -77,30 +72,10 @@ public class MainFragment extends Fragment {
                 // TODO: Move to VM -> API layer by using delegate pattern in VM
                 DatabaseReference statusRef = mDatabase.child("someChildNode");
                 long dateInMS = new Date().getTime();
-                Status currentStatus = new Status("testNameFromApp", dateInMS, 1);
+                Status currentStatus = new Status("Some Android User", dateInMS, 1);
 
                 FirebaseClient.setNewStatus(currentStatus);
-
-                // Set LiveData object -> TODO: Do this in the VM
-                String anotherName = "Live Data Name";
-                mViewModel.getCurrentName().setValue(anotherName);
             }
         });
-
-        // Create the (LiveData) observer which updates the UI.
-        final Observer<String> nameObserver = new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable final String newName) {
-                // Update the UI, in this case, a TextView.
-                resultTextView.setText(newName);
-            }
-        };
-
-        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-        mViewModel.getCurrentName().observe(this, nameObserver);
-
-        // TODO: Use live data to automatically update this!
-        //resultTextView.setText(mViewModel.getResults());
-
     }
 }
