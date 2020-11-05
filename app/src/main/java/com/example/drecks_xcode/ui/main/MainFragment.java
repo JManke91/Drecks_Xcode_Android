@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.drecks_xcode.Model.FirebaseClient;
@@ -24,11 +25,16 @@ import com.example.drecks_xcode.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MainFragment extends Fragment {
+    // Views
     private Button sendRequestButton;
     private TextView resultTextView;
+    private ListView listView;
+
     private DatabaseReference mDatabase;
 
     public static MainFragment newInstance() {
@@ -52,9 +58,37 @@ public class MainFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        createViews();
+        getStatusUpdates();
+        setupSendRequestButtonAction();
+        setupListView();
+    }
+
+    private void setupListView() {
+        // Create mocked array list -> replace later with real data
+        List<Status> fooList = new ArrayList<>();
+        Status firstStatus = new Status("first test", 1000, 1);
+        Status secondStatus = new Status("second test", 1000, 1);
+        Status thirdStatus = new Status("third very long test", 1000, 1);
+
+        fooList.add(firstStatus);
+        fooList.add(secondStatus);
+        fooList.add(thirdStatus);
+
+        // Create custom adapter
+        ListAdapter customListAdapter = new ListAdapter(getActivity(), R.layout.list_row, fooList);
+
+        // Connect adapter to UI
+        listView.setAdapter(customListAdapter);
+    }
+
+    private void createViews() {
         sendRequestButton = getActivity().findViewById(R.id.sendRequestButton);
         resultTextView = getActivity().findViewById(R.id.resultTextView);
+        listView = (ListView) getActivity().findViewById(R.id.listview_activity_main);
+    }
 
+    private void getStatusUpdates() {
         FirebaseClient.getStatusUpdates(new FirebaseResponseInterface() {
             @Override
             public void onCallback(int value) {
@@ -62,9 +96,10 @@ public class MainFragment extends Fragment {
                 resultTextView.setText(Integer.toString(value));
             }
         });
+    }
 
+    private void setupSendRequestButtonAction() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
         sendRequestButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.d("myTag", "clicked");
