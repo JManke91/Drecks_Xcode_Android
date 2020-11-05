@@ -5,25 +5,53 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_shape">
+    android:background="@drawable/gradient_shape"
     tools:context=".ui.main.MainFragment">
 
-    <ListView
-        android:id="@+id/listview_activity_main"
-        android:layout_width="match_parent"
+    <soup.neumorphism.NeumorphCardView
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:divider="#00FFFFFF"
-        android:dividerHeight="1dp"
+        android:layout_gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/sendRequestButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
 
-    <Button
+        android:padding="20dp"
+        app:neumorph_shadowColorDark="#19191E"
+        app:neumorph_shadowColorLight="#323C41">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ListView
+                android:id="@+id/listview_activity_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="#00FFFFFF"
+                android:dividerHeight="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </soup.neumorphism.NeumorphCardView>
+
+    <soup.neumorphism.NeumorphButton
         android:id="@+id/sendRequestButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Drecks Xcode"
+        android:text="Vote!"
+        android:layout_margin="2px"
+        android:textColor="@color/common_google_signin_btn_text_dark"
+
+        android:padding="40dp"
+        app:neumorph_shapeType="flat"
+        app:neumorph_shadowColorLight="#323C41"
+        app:neumorph_shadowColorDark="#19191E"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -35,9 +63,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="-"
-        android:textColor="@color/common_google_signin_btn_text_dark"
-        app:layout_constraintBottom_toTopOf="@+id/sendRequestButton"
+        android:textColor="@color/common_google_signin_btn_text_dark_pressed"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sendRequestButton" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

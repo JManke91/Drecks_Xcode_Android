@@ -13,7 +13,7 @@
             android:layout_weight="1"
             android:text="left cell"
             android:layout_marginLeft="20dp"
-            android:textColor="@color/common_google_signin_btn_text_dark"
+            android:textColor="@color/common_google_signin_btn_text_dark_pressed"
             android:height="20sp" />
 
         <TextView
@@ -22,7 +22,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:text="right cell"
-            android:textColor="@color/common_google_signin_btn_text_dark"
+            android:textColor="@color/common_google_signin_btn_text_dark_pressed"
             android:height="20sp" />
     </TableRow>
 </TableLayout>
