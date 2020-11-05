@@ -60,8 +60,13 @@ public class MainFragment extends Fragment {
 
         createViews();
         getStatusUpdates();
+        requestStatusListUpdates();
         setupSendRequestButtonAction();
         setupListView();
+    }
+
+    private void requestStatusListUpdates() {
+        FirebaseClient.requestStatusListUpdates();
     }
 
     private void setupListView() {

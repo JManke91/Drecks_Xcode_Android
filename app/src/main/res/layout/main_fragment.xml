@@ -43,7 +43,6 @@
         android:textColor="@color/common_google_signin_btn_text_dark"
 
         android:padding="40dp"
-        app:neumorph_shapeType="flat"
         app:neumorph_shadowColorLight="#323C41"
         app:neumorph_shadowColorDark="#19191E" />
 

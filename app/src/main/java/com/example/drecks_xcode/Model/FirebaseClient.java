@@ -2,10 +2,13 @@ package com.example.drecks_xcode.Model;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class FirebaseClient {
@@ -36,5 +39,23 @@ public class FirebaseClient {
             }
         };
         ref.addValueEventListener(eventListener);
+    }
+
+    public static void requestStatusListUpdates() {
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("status");
+        Query myQuery = dbRef.orderByChild("date").limitToLast(2);
+
+        myQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("newEvent", "new event received");
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("canclledEvent", "new event was cancelled");
+            }
+        });
     }
 }

@@ -6,12 +6,12 @@ public class Status {
     public String name;
     //public Date date;
 
-    public long dateInMS;
+    public long date;
     public Integer strike;
 
     public Status(String name, long dateInMS, Integer strike) {
         this.name = name;
-        this.dateInMS = dateInMS;
+        this.date = dateInMS;
         this.strike = strike;
     }
 }
