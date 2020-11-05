@@ -35,6 +35,7 @@
 
     <soup.neumorphism.NeumorphButton
         android:id="@+id/sendRequestButton"
+        style="@style/Widget.Neumorph.ImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -42,7 +43,7 @@
         android:layout_marginTop="300dp"
         android:textColor="@color/common_google_signin_btn_text_dark"
 
-        android:padding="40dp"
+        android:padding="60dp"
         app:neumorph_shadowColorLight="#323C41"
         app:neumorph_shadowColorDark="#19191E" />
 

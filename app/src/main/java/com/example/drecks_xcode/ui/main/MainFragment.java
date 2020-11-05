@@ -72,9 +72,9 @@ public class MainFragment extends Fragment {
     private void setupListView() {
         // Create mocked array list -> replace later with real data
         List<Status> fooList = new ArrayList<>();
-        Status firstStatus = new Status("first test", 1000, 1);
-        Status secondStatus = new Status("second test", 1000, 1);
-        Status thirdStatus = new Status("third very long test", 1000, 1);
+        Status firstStatus = new Status(1111, 1, "first test");
+        Status secondStatus = new Status(2222, 1, "second test");
+        Status thirdStatus = new Status(3333, 1, "third very long test");
 
         fooList.add(firstStatus);
         fooList.add(secondStatus);
@@ -112,7 +112,7 @@ public class MainFragment extends Fragment {
                 // TODO: Move to VM -> API layer by using delegate pattern in VM
                 DatabaseReference statusRef = mDatabase.child("someChildNode");
                 long dateInMS = new Date().getTime();
-                Status currentStatus = new Status("Some Android User", dateInMS, 1);
+                Status currentStatus = new Status(dateInMS, 1   , "Some Android User");
 
                 FirebaseClient.setNewStatus(currentStatus);
             }

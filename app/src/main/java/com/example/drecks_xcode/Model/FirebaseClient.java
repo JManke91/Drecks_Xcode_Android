@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.firebase.BuildConfig;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -11,7 +12,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Method;
+
 public class FirebaseClient {
+
+    private static final String TAG = "FirebaseClient";
+
     public static void setNewStatus(Status status) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         DatabaseReference statusRef = mDatabase.child("status");
@@ -48,7 +54,10 @@ public class FirebaseClient {
         myQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("newEvent", "new event received");
+
+                for(DataSnapshot statusSnapshot: dataSnapshot.getChildren()) {
+                    Status status = statusSnapshot.getValue(Status.class);
+                }
 
             }
 
