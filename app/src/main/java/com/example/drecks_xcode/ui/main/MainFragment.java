@@ -85,8 +85,6 @@ public class MainFragment extends Fragment {
                 updateListView(foo);
             }
         });
-
-
     }
 
     private void setupListView() {
@@ -135,10 +133,6 @@ public class MainFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         sendRequestButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.d("myTag", "clicked");
-
-                // TODO: Move to VM -> API layer by using delegate pattern in VM
-                DatabaseReference statusRef = mDatabase.child("someChildNode");
                 long dateInMS = new Date().getTime();
                 Status currentStatus = new Status(dateInMS, 1   , "Android User");
 

@@ -11,7 +11,7 @@
 
     <soup.neumorphism.NeumorphCardView
         android:layout_marginTop="50dp"
-        android:layout_width="280dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         app:neumorph_shapeType="pressed"
@@ -40,8 +40,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:hapticFeedbackEnabled="true"
         android:text="Vote!"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="200dp"
         android:textColor="@color/common_google_signin_btn_text_dark"
 
         android:padding="60dp"

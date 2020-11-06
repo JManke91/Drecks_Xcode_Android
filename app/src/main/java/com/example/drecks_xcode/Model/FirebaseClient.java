@@ -49,17 +49,7 @@ public class FirebaseClient {
 
     public static void requestStatusListUpdates(final FirebaseStatusListResponseInterface firebaseStatusListResponseInterface) {
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("status");
-        Query myQuery = dbRef.orderByChild("date").limitToLast(2);
-
-        // Create ArrayList
-//        List<Status> fooList = new ArrayList<>();
-//        Status firstStatus = new Status(1111, 1, "first test");
-//        Status secondStatus = new Status(2222, 1, "second test");
-//        Status thirdStatus = new Status(3333, 1, "third very long test");
-//
-//        fooList.add(firstStatus);
-//        fooList.add(secondStatus);
-//        fooList.add(thirdStatus);
+        Query myQuery = dbRef.orderByChild("date").limitToLast(5);
 
         myQuery.addValueEventListener(new ValueEventListener() {
             @Override
@@ -70,7 +60,6 @@ public class FirebaseClient {
                     Status status = statusSnapshot.getValue(Status.class);
                     // add data to list
                     fooList.add(status);
-//                    firebaseStatusListResponseInterface.onStatusListUpdatesCallback(status);
                 }
 
                 // return data

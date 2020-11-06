@@ -51,7 +51,11 @@ public class ListAdapter extends ArrayAdapter<Status> {
             TextView rightTextView = (TextView) view.findViewById(R.id.rightTextView);
 
             if (leftTextView != null) {
-                leftTextView.setText(status.name);
+                if (status.name.length() == 0) {
+                    leftTextView.setText("Unknown");
+                } else {
+                    leftTextView.setText(status.name);
+                }
             }
             if (rightTextView != null) {
                 // TODO: Parse "dateInMS" to correct date format
