@@ -4,7 +4,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.google.firebase.BuildConfig;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -12,7 +11,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FirebaseClient {
 
@@ -36,7 +36,7 @@ public class FirebaseClient {
                 int result = dataSnapshot.getValue(Integer.class);
 
                 Log.d("afterDataSnapshot", "after");
-                firebaseResponseInterface.onCallback(result);
+                firebaseResponseInterface.onStatusUpdatesCallback(result);
             }
 
             @Override
@@ -47,17 +47,34 @@ public class FirebaseClient {
         ref.addValueEventListener(eventListener);
     }
 
-    public static void requestStatusListUpdates() {
+    public static void requestStatusListUpdates(final FirebaseStatusListResponseInterface firebaseStatusListResponseInterface) {
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("status");
         Query myQuery = dbRef.orderByChild("date").limitToLast(2);
+
+        // Create ArrayList
+//        List<Status> fooList = new ArrayList<>();
+//        Status firstStatus = new Status(1111, 1, "first test");
+//        Status secondStatus = new Status(2222, 1, "second test");
+//        Status thirdStatus = new Status(3333, 1, "third very long test");
+//
+//        fooList.add(firstStatus);
+//        fooList.add(secondStatus);
+//        fooList.add(thirdStatus);
 
         myQuery.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Status> fooList = new ArrayList<>();
 
                 for(DataSnapshot statusSnapshot: dataSnapshot.getChildren()) {
                     Status status = statusSnapshot.getValue(Status.class);
+                    // add data to list
+                    fooList.add(status);
+//                    firebaseStatusListResponseInterface.onStatusListUpdatesCallback(status);
                 }
+
+                // return data
+                firebaseStatusListResponseInterface.onStatusListUpdatesCallback(fooList);
 
             }
 

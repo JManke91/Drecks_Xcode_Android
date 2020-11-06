@@ -11,6 +11,10 @@ import android.widget.TextView;
 import com.example.drecks_xcode.Model.Status;
 import com.example.drecks_xcode.R;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ListAdapter extends ArrayAdapter<Status> {
@@ -50,7 +54,13 @@ public class ListAdapter extends ArrayAdapter<Status> {
                 leftTextView.setText(status.name);
             }
             if (rightTextView != null) {
-                rightTextView.setText(Integer.toString(status.strike));
+                // TODO: Parse "dateInMS" to correct date format
+                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(status.date);
+                String myTime = formatter.format(calendar.getTime());
+
+                rightTextView.setText(myTime);
             }
         }
 

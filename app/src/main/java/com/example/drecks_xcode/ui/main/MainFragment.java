@@ -4,6 +4,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.os.Bundle;
 
@@ -20,6 +22,7 @@ import android.widget.TextView;
 
 import com.example.drecks_xcode.Model.FirebaseClient;
 import com.example.drecks_xcode.Model.FirebaseResponseInterface;
+import com.example.drecks_xcode.Model.FirebaseStatusListResponseInterface;
 import com.example.drecks_xcode.Model.Status;
 import com.example.drecks_xcode.R;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +37,15 @@ public class MainFragment extends Fragment {
     private Button sendRequestButton;
     private TextView resultTextView;
     private ListView listView;
+
+    List<Status> fooList;
+
+    {
+        fooList = new ArrayList<>();
+    }
+
+    // Create custom adapter
+    ListAdapter customListAdapter;
 
     private DatabaseReference mDatabase;
 
@@ -66,25 +78,41 @@ public class MainFragment extends Fragment {
     }
 
     private void requestStatusListUpdates() {
-        FirebaseClient.requestStatusListUpdates();
+        FirebaseClient.requestStatusListUpdates(new FirebaseStatusListResponseInterface() {
+            @Override
+            public void onStatusListUpdatesCallback(List<Status> value) {
+                List<Status> foo = value;
+                updateListView(foo);
+            }
+        });
+
+
     }
 
     private void setupListView() {
-        // Create mocked array list -> replace later with real data
-        List<Status> fooList = new ArrayList<>();
-        Status firstStatus = new Status(1111, 1, "first test");
-        Status secondStatus = new Status(2222, 1, "second test");
-        Status thirdStatus = new Status(3333, 1, "third very long test");
-
-        fooList.add(firstStatus);
-        fooList.add(secondStatus);
-        fooList.add(thirdStatus);
-
-        // Create custom adapter
-        ListAdapter customListAdapter = new ListAdapter(getActivity(), R.layout.list_row, fooList);
+        customListAdapter = new ListAdapter(getActivity(), R.layout.list_row, fooList);
 
         // Connect adapter to UI
         listView.setAdapter(customListAdapter);
+    }
+
+    private void updateListView(List<Status> statusList) {
+        // Remove old data from list
+        fooList.clear();
+        // Add all elements from new list
+        for (Status status : statusList) {
+            fooList.add(status);
+        }
+
+        // Execute UI code on main thread
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        Runnable myRunnable = new Runnable() {
+            @Override
+            public void run() {
+                customListAdapter.notifyDataSetChanged();
+            }
+        };
+        mainHandler.post(myRunnable);
     }
 
     private void createViews() {
@@ -96,7 +124,7 @@ public class MainFragment extends Fragment {
     private void getStatusUpdates() {
         FirebaseClient.getStatusUpdates(new FirebaseResponseInterface() {
             @Override
-            public void onCallback(int value) {
+            public void onStatusUpdatesCallback(int value) {
                 Log.d("callbackTag", "onCallback: ");
                 resultTextView.setText(Integer.toString(value));
             }
@@ -112,7 +140,7 @@ public class MainFragment extends Fragment {
                 // TODO: Move to VM -> API layer by using delegate pattern in VM
                 DatabaseReference statusRef = mDatabase.child("someChildNode");
                 long dateInMS = new Date().getTime();
-                Status currentStatus = new Status(dateInMS, 1   , "Some Android User");
+                Status currentStatus = new Status(dateInMS, 1   , "Android User");
 
                 FirebaseClient.setNewStatus(currentStatus);
             }
