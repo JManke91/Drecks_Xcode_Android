@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.drecks_xcode.Model.FirebaseClient;
@@ -37,6 +38,8 @@ public class MainFragment extends Fragment {
     private Button sendRequestButton;
     private TextView resultTextView;
     private ListView listView;
+    private ProgressBar progressBar;
+    private ProgressBar listProgressBar;
 
     List<Status> fooList;
 
@@ -84,6 +87,11 @@ public class MainFragment extends Fragment {
                 List<Status> foo = value;
                 updateListView(foo);
             }
+
+            @Override
+            public void onErrorCallback() {
+                listProgressBar.setVisibility(View.GONE);
+            }
         });
     }
 
@@ -107,6 +115,7 @@ public class MainFragment extends Fragment {
         Runnable myRunnable = new Runnable() {
             @Override
             public void run() {
+                listProgressBar.setVisibility(View.GONE);
                 customListAdapter.notifyDataSetChanged();
             }
         };
@@ -117,6 +126,12 @@ public class MainFragment extends Fragment {
         sendRequestButton = getActivity().findViewById(R.id.sendRequestButton);
         resultTextView = getActivity().findViewById(R.id.resultTextView);
         listView = (ListView) getActivity().findViewById(R.id.listview_activity_main);
+
+        listProgressBar = (ProgressBar) getActivity().findViewById(R.id.listProgressBar);
+        listProgressBar.setVisibility(View.VISIBLE);
+
+        progressBar = (ProgressBar) getActivity().findViewById(R.id.pBar);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     private void getStatusUpdates() {
@@ -124,7 +139,14 @@ public class MainFragment extends Fragment {
             @Override
             public void onStatusUpdatesCallback(int value) {
                 Log.d("callbackTag", "onCallback: ");
+                progressBar.setVisibility(View.GONE);
                 resultTextView.setText(Integer.toString(value));
+            }
+
+            @Override
+            public void onErrorCallback() {
+                progressBar.setVisibility(View.GONE);
+                resultTextView.setText("Error");
             }
         });
     }

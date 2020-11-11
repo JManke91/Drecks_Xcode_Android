@@ -42,6 +42,7 @@ public class FirebaseClient {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.d("newCancelled", "cancelled");
+                firebaseResponseInterface.onErrorCallback();
             }
         };
         ref.addValueEventListener(eventListener);
@@ -70,6 +71,7 @@ public class FirebaseClient {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.d("canclledEvent", "new event was cancelled");
+                firebaseStatusListResponseInterface.onErrorCallback();
             }
         });
     }
